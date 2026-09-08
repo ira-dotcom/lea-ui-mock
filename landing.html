@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lea, the AI action agent for when you're overwhelmed</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#12100F; --ink-2:#241F1E; --paper:#FFFBF7; --pink:#E8467C; --pink-soft:#FDE7EF;
+  --muted:#6B615E; --line:#EADFD8;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.bar{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--line)}
+.logo{font-weight:700;letter-spacing:-.02em;font-size:20px}
+.logo span{color:var(--pink)}
+.exit{display:flex;gap:10px;align-items:center}
+.exit-btn{font-size:13px;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:8px 14px;background:#fff;text-decoration:none}
+.exit-btn.hot{background:var(--ink);color:#fff;border-color:var(--ink)}
+.hero{padding:64px 0 40px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);margin:0 0 18px}
+h1{font-family:"EB Garamond",Georgia,serif;font-size:60px;line-height:1.02;letter-spacing:-.02em;margin:0 0 20px;font-weight:600}
+h1 em{font-style:italic;color:var(--pink)}
+.lede{font-size:19px;line-height:1.55;color:var(--ink-2);margin:0 0 28px;max-width:34em}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.btn{display:inline-block;text-decoration:none;font-weight:600;font-size:16px;padding:15px 24px;border-radius:12px}
+.btn-primary{background:var(--pink);color:#fff;box-shadow:0 10px 24px rgba(232,70,124,.28)}
+.btn-ghost{background:#fff;border:1px solid var(--line)}
+.fineprint{font-size:13px;color:var(--muted);margin:0}
+.phone{background:var(--ink);border-radius:34px;padding:14px;box-shadow:0 30px 60px rgba(18,16,15,.22)}
+.screen{background:#fff;border-radius:24px;overflow:hidden}
+.screen-top{background:var(--pink-soft);padding:14px 16px;font-size:12px;font-weight:700;color:var(--pink);letter-spacing:.08em}
+.msgs{padding:14px 14px 18px;display:flex;flex-direction:column;gap:10px}
+.b{font-size:13.5px;line-height:1.45;padding:11px 13px;border-radius:14px;max-width:86%}
+.b.me{align-self:flex-end;background:#F2EFEC}
+.b.lea{background:var(--ink);color:#fff}
+.b.step{background:#fff;border:1px solid var(--line);font-weight:600}
+.b.step small{display:block;font-weight:500;color:var(--muted);margin-top:4px}
+.strip{background:var(--ink);color:#fff;margin-top:44px;padding:56px 0}
+.strip h2{font-family:"EB Garamond",Georgia,serif;font-size:34px;margin:0 0 30px;font-weight:600;letter-spacing:-.01em}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.card-dark{border:1px solid #322B29;border-radius:16px;padding:22px}
+.card-dark.old{opacity:.62}
+.tag{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#B9AFAC;margin:0 0 12px}
+.card-dark.new .tag{color:var(--pink)}
+.quote{font-size:17px;line-height:1.5;margin:0}
+.steps{margin:14px 0 0;padding:0;list-style:none;font-size:15px;line-height:1.6}
+.steps li{padding-left:22px;position:relative}
+.steps li:before{content:"\2192";position:absolute;left:0;color:var(--pink)}
+.sec{padding:64px 0}
+.sec h2{font-family:"EB Garamond",Georgia,serif;font-size:38px;letter-spacing:-.01em;margin:0 0 8px;font-weight:600}
+.sec p.sub{font-size:17px;color:var(--muted);margin:0 0 34px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px}
+.card h3{font-size:17px;margin:0 0 8px;letter-spacing:-.01em}
+.card p{font-size:14.5px;line-height:1.55;color:var(--ink-2);margin:0}
+.pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pink);background:var(--pink-soft);border-radius:999px;padding:5px 10px;margin-bottom:12px}
+.proof{background:var(--pink-soft);padding:40px 0}
+.proof-row{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;text-align:center}
+.num{font-family:"EB Garamond",Georgia,serif;font-size:36px;font-weight:600;color:var(--pink);margin:0}
+.num-lab{font-size:13px;color:var(--ink-2);margin:6px 0 0}
+.founder{background:#fff;border:1px solid var(--line);border-left:4px solid var(--pink);border-radius:14px;padding:26px}
+.founder p{margin:0;font-size:17px;line-height:1.6}
+.founder .who{font-size:14px;color:var(--muted);margin-top:12px}
+.safety{background:var(--ink);color:#fff;padding:52px 0 30px}
+.safety h2{font-family:"EB Garamond",Georgia,serif;font-size:26px;margin:0 0 16px;font-weight:600}
+.nums{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;font-size:14.5px;line-height:1.6;color:#EDE6E4}
+.nums b{color:#fff}
+.limits{margin-top:26px;font-size:13.5px;line-height:1.65;color:#B9AFAC;max-width:62em}
+.foot{border-top:1px solid #322B29;margin-top:26px;padding-top:18px;font-size:12.5px;color:#8E8481;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;padding-top:40px}
+  h1{font-size:42px}
+  .two,.grid,.proof-row,.nums{grid-template-columns:1fr}
+  .proof-row{gap:26px}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="bar">
+    <div class="logo">Lea<span>.</span> <span style="font-weight:500;color:var(--muted);font-size:13px">by Legali</span></div>
+    <div class="exit">
+      <a class="exit-btn" href="#safety">Safety &amp; privacy</a>
+      <a class="exit-btn hot" href="https://weather.com">Quick exit</a>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div>
+      <p class="eyebrow">For when it is too much to hold alone</p>
+      <h1>The AI action agent for when you are <em>overwhelmed</em>.</h1>
+      <p class="lede">Abuse, harassment, stalking. Lea answers your question straight, names the next step, and builds your record with you, so what happened to you is not just a memory you are carrying. Free to start, in 10 languages, on your phone.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#">Talk to Lea now</a>
+        <a class="btn btn-ghost" href="#how">See what she actually does</a>
+      </div>
+      <p class="fineprint">No account needed to start. Disguise Mode makes Lea look like a fitness app. Two presses of volume down closes her instantly.</p>
+    </div>
+
+    <div class="phone">
+      <div class="screen">
+        <div class="screen-top">LEA &middot; VOICE OR TEXT</div>
+        <div class="msgs">
+          <div class="b me">He checks my bank app every night and says it is because I am bad with money. I do not know if that is even a thing.</div>
+          <div class="b lea">It is a thing, and it has a name. Monitoring your money and framing it as help is financial control, and in a growing number of states it counts in family court whether or not it is a crime.</div>
+          <div class="b step">Next step: log tonight's check<small>I will timestamp it and keep it in your record. Six entries and you have a pattern, not a feeling.</small></div>
+          <div class="b step">Then: your rights, in your language<small>California, financial control. Sourced, dated, plain words.</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="strip">
+  <div class="wrap">
+    <h2>Most help stops at "you are not alone."</h2>
+    <div class="two">
+      <div class="card-dark old">
+        <p class="tag">What you usually get</p>
+        <p class="quote">"That sounds really hard. You are so brave for sharing. Have you thought about reaching out to someone you trust?"</p>
+      </div>
+      <div class="card-dark new">
+        <p class="tag">What Lea does</p>
+        <p class="quote">Answers the question you actually asked, then moves.</p>
+        <ul class="steps">
+          <li>Names what is happening, in plain words</li>
+          <li>Gives you the next concrete step, not a list of feelings</li>
+          <li>Does the parts she can do herself</li>
+          <li>Asks you first before anything you cannot undo</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section class="sec" id="how">
+    <h2>Six things she does with you</h2>
+    <p class="sub">Recognition is the easy half. Proof is the hard half, and it lands on one person. Usually with no lawyer.</p>
+    <div class="grid">
+      <div class="card">
+        <span class="pill">Recognize</span>
+        <h3>Name it without a law degree</h3>
+        <p>Coercive control, financial monitoring, phone tracking, threats about immigration status or a pet. Lea tells you what the pattern is called and whether it counts where you live.</p>
+      </div>
+      <div class="card">
+        <span class="pill">Record</span>
+        <h3>Hold your own evidence</h3>
+        <p>Screenshots, dates, voice notes, incidents. Organized into a timeline you own and can export, built before a court ever asks for it.</p>
+      </div>
+      <div class="card">
+        <span class="pill">Rights</span>
+        <h3>Your rights in your language</h3>
+        <p>Emergency rights cards generated in the language you speak, with the source and the date they were last reviewed on the card.</p>
+      </div>
+      <div class="card">
+        <span class="pill">Handoff</span>
+        <h3>Get to a real person</h3>
+        <p>Hotlines, local organizations, and trauma-informed specialists, with your record ready to share if you choose to share it.</p>
+      </div>
+      <div class="card">
+        <span class="pill">Safety</span>
+        <h3>Safe on a watched phone</h3>
+        <p>Disguise Mode looks like a fitness app. Quick Exit takes two presses of volume down. Nothing is saved unless you turn saving on.</p>
+      </div>
+      <div class="card">
+        <span class="pill">Prepare</span>
+        <h3>Walk in ready</h3>
+        <p>What a court, a Title IX office, or a lawyer will ask for, what you already have, and the gap between the two.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="proof">
+  <div class="wrap">
+    <div class="proof-row">
+      <div><p class="num">10</p><p class="num-lab">languages, live today</p></div>
+      <div><p class="num">1,400+</p><p class="num-lab">people using Lea</p></div>
+      <div><p class="num">25+</p><p class="num-lab">pilots with orgs and clinics</p></div>
+      <div><p class="num">$0</p><p class="num-lab">spent on advertising</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section class="sec">
+    <div class="founder">
+      <p>"I was seventeen. I called him my crush. It took me years and a law degree to call it what it was. Lea is the thing I needed in the years between."</p>
+      <p class="who">Irawati Puteri, founder of Legali. Stanford Law alum and survivor.</p>
+    </div>
+  </section>
+</div>
+
+<div class="safety" id="safety">
+  <div class="wrap">
+    <h2>If you are in danger right now</h2>
+    <div class="nums">
+      <div><b>911</b> for immediate danger in the US</div>
+      <div><b>1-800-799-7233</b> National Domestic Violence Hotline, 24/7</div>
+      <div><b>Text START to 88788</b> if a call is not safe</div>
+      <div><b>988</b> Suicide &amp; Crisis Lifeline</div>
+      <div><b>741741</b> Crisis Text Line, text HOME</div>
+      <div><b>1-800-422-4453</b> Childhelp, for anyone under 18</div>
+    </div>
+    <p class="limits">Lea organizes and explains. She does not give legal advice, does not decide your case, and does not file anything for you. Disguise Mode changes what Lea looks like on your screen. It does not hide that an app is installed, so if someone checks your phone, plan for that with an advocate. Anything you spend money on or send to another person, Lea asks you first, every time.</p>
+    <div class="foot">
+      <div>Lea, by Legali AI. Built by a survivor, for the years before anyone believes you.</div>
+      <div>lea.legali.ai &middot; privacy &middot; a11y &middot; press</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
