@@ -1,1 +1,87 @@
-PLACEHOLDER
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lea — Your map</title>
+<style>
+  :root{--pink:#E8467C;--ink:#1B1B1F;--muted:#6B6B76;--line:#EBE7E4;--cream:#FBF8F6;--soft:#FDF1F5}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--cream);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:28px 24px 64px}
+  .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:34px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.01em}
+  .dot{width:26px;height:26px;border-radius:50%;background:var(--pink)}
+  .topright{display:flex;align-items:center;gap:10px}
+  .ghost{font-size:13px;color:var(--muted);border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px}
+  .exit{font-size:13px;font-weight:600;color:#fff;background:var(--ink);border-radius:999px;padding:9px 16px}
+  header{margin-bottom:30px;max-width:720px}
+  h1{font-size:40px;line-height:1.1;letter-spacing:-.025em;font-weight:600;margin-bottom:12px}
+  h1 em{font-style:italic;color:var(--pink)}
+  .sub{color:var(--muted);font-size:16px}
+  .banner{background:var(--soft);border:1px solid #F6DCE6;border-radius:14px;padding:16px 18px;margin:26px 0 30px;max-width:820px}
+  .banner strong{display:block;font-size:14px;margin-bottom:3px}
+  .banner p{font-size:13.5px;color:var(--muted)}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;min-height:172px}
+  .card h3{font-size:14.5px;font-weight:600;margin-bottom:8px;letter-spacing:-.01em}
+  .card p{font-size:13px;color:var(--muted);line-height:1.45;flex:1}
+  .chips{display:flex;gap:5px;margin-top:14px}
+  .chip{height:6px;border-radius:99px;flex:1;background:#EFECEA}
+  .chip.on{background:var(--pink)}
+  .kept{font-size:11.5px;color:var(--pink);font-weight:600;margin-top:9px}
+  .kept.none{color:#A8A8B2;font-weight:500}
+  .panel{margin-top:34px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;max-width:820px}
+  .eyebrow{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--pink);font-weight:600;margin-bottom:10px}
+  .panel h2{font-size:22px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px}
+  .q{color:var(--muted);font-size:14.5px;margin-bottom:20px}
+  .opts{display:flex;flex-direction:column;gap:9px}
+  .opt{border:1px solid var(--line);border-radius:12px;padding:13px 15px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .opt.sel{border-color:var(--pink);background:var(--soft)}
+  .opt .lab{font-size:14px}
+  .opt .then{font-size:12px;color:var(--muted);text-align:right;max-width:330px}
+  .skip{margin-top:14px;font-size:12.5px;color:var(--muted)}
+  .note{margin-top:30px;font-size:12.5px;color:var(--muted);max-width:820px}
+  @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}h1{font-size:32px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><span class="dot"></span> Lea</div>
+    <div class="topright"><span class="ghost">Disguise mode</span><span class="exit">Quick exit</span></div>
+  </div>
+  <header>
+    <h1>This is <em>your</em> map.</h1>
+    <p class="sub">Not a test, and not a score. It holds what you have told me, in your words, and it only ever grows.</p>
+  </header>
+  <div class="banner">
+    <strong>You can leave anything blank.</strong>
+    <p>Nothing here is required, nothing is graded, and skipping a question costs you nothing. Come back at 3am if that is when it is safe.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><h3>Safety</h3><p>What is happening, how often, and whether it is changing.</p><div class="chips"><i class="chip on"></i><i class="chip on"></i><i class="chip on"></i><i class="chip"></i></div><div class="kept">3 things recorded</div></div>
+    <div class="card"><h3>Body and mind</h3><p>Sleep, health, injuries, and what you can actually get seen for.</p><div class="chips"><i class="chip on"></i><i class="chip"></i><i class="chip"></i><i class="chip"></i></div><div class="kept">1 thing recorded</div></div>
+    <div class="card"><h3>Home</h3><p>Where you sleep, whether you can stay, and who can get in.</p><div class="chips"><i class="chip on"></i><i class="chip on"></i><i class="chip"></i><i class="chip"></i></div><div class="kept">2 things recorded</div></div>
+    <div class="card"><h3>Money and work</h3><p>Your income, your accounts, debt in your name, and safety at work.</p><div class="chips"><i class="chip on"></i><i class="chip"></i><i class="chip"></i><i class="chip"></i></div><div class="kept">1 thing recorded</div></div>
+    <div class="card"><h3>Legal and systems</h3><p>What is open, what is coming, and what he is using against you.</p><div class="chips"><i class="chip on"></i><i class="chip on"></i><i class="chip"></i><i class="chip"></i></div><div class="kept">2 things recorded</div></div>
+    <div class="card"><h3>People</h3><p>Who knows, who would turn up, and who is not safe to tell.</p><div class="chips"><i class="chip"></i><i class="chip"></i><i class="chip"></i><i class="chip"></i></div><div class="kept none">Nothing here yet, and that is fine</div></div>
+    <div class="card"><h3>Children</h3><p>Who you are responsible for, and what he does through them.</p><div class="chips"><i class="chip on"></i><i class="chip"></i><i class="chip"></i><i class="chip"></i></div><div class="kept">1 thing recorded</div></div>
+    <div class="card"><h3>You, and where you are going</h3><p>What a good life looks like, in the words you used for it.</p><div class="chips"><i class="chip on"></i><i class="chip on"></i><i class="chip"></i><i class="chip"></i></div><div class="kept">2 things recorded</div></div>
+  </div>
+  <div class="panel">
+    <div class="eyebrow">Legal and systems</div>
+    <h2>Asking a court to order him to stay away</h2>
+    <p class="q">Which of these is closest to true for you right now?</p>
+    <div class="opts">
+      <div class="opt"><span class="lab">I don't know how this works</span><span class="then">I will walk you through it, for your state, at your pace</span></div>
+      <div class="opt sel"><span class="lab">I know how, but I can't right now</span><span class="then">Then we work on what is in the way, not on explaining it again</span></div>
+      <div class="opt"><span class="lab">I could, but I am not going to yet</span><span class="then">That is a real answer. I will not ask again until you say so</span></div>
+      <div class="opt"><span class="lab">I already did this</span><span class="then">Then it stays done, and it stays on your map</span></div>
+    </div>
+    <p class="skip">Not now &nbsp;·&nbsp; Ask me another time &nbsp;·&nbsp; I would rather not answer this one</p>
+  </div>
+  <p class="note">Lea explains and organises. She never decides for you and never files anything. Nothing on this map is a score, a rank or a verdict, and nothing on it ever goes backwards.</p>
+</div>
+</body>
+</html>
