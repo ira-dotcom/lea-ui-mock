@@ -2,219 +2,200 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lea, the AI action agent for when you're overwhelmed</title>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Legali — Justice, accessible to everyone.</title>
 <style>
-:root{
-  --ink:#12100F; --ink-2:#241F1E; --paper:#FFFBF7; --pink:#E8467C; --pink-soft:#FDE7EF;
-  --muted:#6B615E; --line:#EADFD8;
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:inherit}
-.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
-.bar{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--line)}
-.logo{font-weight:700;letter-spacing:-.02em;font-size:20px}
-.logo span{color:var(--pink)}
-.exit{display:flex;gap:10px;align-items:center}
-.exit-btn{font-size:13px;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:8px 14px;background:#fff;text-decoration:none}
-.exit-btn.hot{background:var(--ink);color:#fff;border-color:var(--ink)}
-.hero{padding:64px 0 40px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
-.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);margin:0 0 18px}
-h1{font-family:"EB Garamond",Georgia,serif;font-size:60px;line-height:1.02;letter-spacing:-.02em;margin:0 0 20px;font-weight:600}
-h1 em{font-style:italic;color:var(--pink)}
-.lede{font-size:19px;line-height:1.55;color:var(--ink-2);margin:0 0 28px;max-width:34em}
-.cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
-.btn{display:inline-block;text-decoration:none;font-weight:600;font-size:16px;padding:15px 24px;border-radius:12px}
-.btn-primary{background:var(--pink);color:#fff;box-shadow:0 10px 24px rgba(232,70,124,.28)}
-.btn-ghost{background:#fff;border:1px solid var(--line)}
-.fineprint{font-size:13px;color:var(--muted);margin:0}
-.phone{background:var(--ink);border-radius:34px;padding:14px;box-shadow:0 30px 60px rgba(18,16,15,.22)}
-.screen{background:#fff;border-radius:24px;overflow:hidden}
-.screen-top{background:var(--pink-soft);padding:14px 16px;font-size:12px;font-weight:700;color:var(--pink);letter-spacing:.08em}
-.msgs{padding:14px 14px 18px;display:flex;flex-direction:column;gap:10px}
-.b{font-size:13.5px;line-height:1.45;padding:11px 13px;border-radius:14px;max-width:86%}
-.b.me{align-self:flex-end;background:#F2EFEC}
-.b.lea{background:var(--ink);color:#fff}
-.b.step{background:#fff;border:1px solid var(--line);font-weight:600}
-.b.step small{display:block;font-weight:500;color:var(--muted);margin-top:4px}
-.strip{background:var(--ink);color:#fff;margin-top:44px;padding:56px 0}
-.strip h2{font-family:"EB Garamond",Georgia,serif;font-size:34px;margin:0 0 30px;font-weight:600;letter-spacing:-.01em}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.card-dark{border:1px solid #322B29;border-radius:16px;padding:22px}
-.card-dark.old{opacity:.62}
-.tag{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#B9AFAC;margin:0 0 12px}
-.card-dark.new .tag{color:var(--pink)}
-.quote{font-size:17px;line-height:1.5;margin:0}
-.steps{margin:14px 0 0;padding:0;list-style:none;font-size:15px;line-height:1.6}
-.steps li{padding-left:22px;position:relative}
-.steps li:before{content:"\2192";position:absolute;left:0;color:var(--pink)}
-.sec{padding:64px 0}
-.sec h2{font-family:"EB Garamond",Georgia,serif;font-size:38px;letter-spacing:-.01em;margin:0 0 8px;font-weight:600}
-.sec p.sub{font-size:17px;color:var(--muted);margin:0 0 34px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px}
-.card h3{font-size:17px;margin:0 0 8px;letter-spacing:-.01em}
-.card p{font-size:14.5px;line-height:1.55;color:var(--ink-2);margin:0}
-.pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pink);background:var(--pink-soft);border-radius:999px;padding:5px 10px;margin-bottom:12px}
-.proof{background:var(--pink-soft);padding:40px 0}
-.proof-row{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;text-align:center}
-.num{font-family:"EB Garamond",Georgia,serif;font-size:36px;font-weight:600;color:var(--pink);margin:0}
-.num-lab{font-size:13px;color:var(--ink-2);margin:6px 0 0}
-.founder{background:#fff;border:1px solid var(--line);border-left:4px solid var(--pink);border-radius:14px;padding:26px}
-.founder p{margin:0;font-size:17px;line-height:1.6}
-.founder .who{font-size:14px;color:var(--muted);margin-top:12px}
-.safety{background:var(--ink);color:#fff;padding:52px 0 30px}
-.safety h2{font-family:"EB Garamond",Georgia,serif;font-size:26px;margin:0 0 16px;font-weight:600}
-.nums{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;font-size:14.5px;line-height:1.6;color:#EDE6E4}
-.nums b{color:#fff}
-.limits{margin-top:26px;font-size:13.5px;line-height:1.65;color:#B9AFAC;max-width:62em}
-.foot{border-top:1px solid #322B29;margin-top:26px;padding-top:18px;font-size:12.5px;color:#8E8481;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-@media (max-width:900px){
-  .hero{grid-template-columns:1fr;padding-top:40px}
-  h1{font-size:42px}
-  .two,.grid,.proof-row,.nums{grid-template-columns:1fr}
-  .proof-row{gap:26px}
-}
+  :root{--pink:#E8467C;--ink:#1A1A1A;--cream:#FBF8F6;--line:#E7DFDA;--muted:#6B6360;}
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 28px;}
+  nav{position:sticky;top:0;z-index:50;background:rgba(251,248,246,.86);backdrop-filter:saturate(150%) blur(12px);border-bottom:1px solid var(--line);}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px;}
+  .brand{font-weight:700;letter-spacing:-.02em;font-size:19px;}
+  .brand span{color:var(--pink);}
+  .navlinks{display:flex;gap:26px;font-size:14px;color:var(--muted);}
+  .navlinks a{color:inherit;text-decoration:none;}
+  .navlinks a:hover{color:var(--ink);}
+  .cta{background:var(--pink);color:#fff;border:0;border-radius:999px;padding:11px 20px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+  section{padding:104px 0;border-bottom:1px solid var(--line);}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);font-weight:700;margin:0 0 18px;}
+  h1{font-size:60px;line-height:1.03;letter-spacing:-.035em;margin:0 0 22px;max-width:16ch;}
+  h2{font-size:40px;line-height:1.08;letter-spacing:-.03em;margin:0 0 16px;max-width:20ch;}
+  h3{font-size:20px;letter-spacing:-.01em;margin:0 0 8px;}
+  .lede{font-size:20px;color:var(--muted);max-width:56ch;margin:0 0 32px;}
+  .sub{font-size:16px;color:var(--muted);max-width:60ch;margin:0 0 40px;}
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.3,1);}
+  .reveal.in{opacity:1;transform:none;}
+  .d1{transition-delay:.08s;} .d2{transition-delay:.18s;} .d3{transition-delay:.28s;}
+  .stats{display:flex;gap:44px;flex-wrap:wrap;margin-top:56px;}
+  .stat b{display:block;font-size:32px;letter-spacing:-.02em;}
+  .stat span{font-size:13px;color:var(--muted);}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;transition:transform .4s ease,box-shadow .4s ease;}
+  .card:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(26,26,26,.07);}
+  .dot{width:34px;height:34px;border-radius:10px;background:var(--pink);opacity:.14;margin-bottom:16px;}
+  .card p{color:var(--muted);font-size:15px;margin:0 0 14px;}
+  .card ul{margin:0;padding-left:18px;color:var(--muted);font-size:14px;}
+  .card li{margin-bottom:6px;}
+  .demo{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:start;margin-top:44px;}
+  .phone{background:#fff;border:1px solid var(--line);border-radius:26px;padding:24px;min-height:340px;}
+  .bubble{background:#F6EFF2;border-radius:16px;padding:14px 16px;font-size:15px;margin-bottom:12px;max-width:88%;}
+  .bubble.me{background:var(--pink);color:#fff;margin-left:auto;}
+  .choices{display:flex;flex-direction:column;gap:10px;margin-top:18px;}
+  .choice{text-align:left;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 15px;font-size:15px;cursor:pointer;font-family:inherit;color:var(--ink);transition:border-color .2s ease,background .2s ease;}
+  .choice:hover{border-color:var(--pink);background:#FFF7FA;}
+  .choice.sel{border-color:var(--pink);background:#FFF0F5;}
+  .note{font-size:13px;color:var(--muted);margin-top:18px;}
+  .steps{display:flex;flex-direction:column;gap:18px;}
+  .step{display:flex;gap:14px;}
+  .num{flex:none;width:26px;height:26px;border-radius:999px;background:var(--pink);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+  .step p{margin:0;font-size:15px;color:var(--muted);}
+  .step b{color:var(--ink);font-weight:600;}
+  .quotes{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:40px;}
+  .quote{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;}
+  .quote p{font-size:17px;margin:0 0 14px;}
+  .who{font-size:13px;color:var(--muted);}
+  .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px;}
+  .fact{border-top:2px solid var(--pink);padding-top:14px;}
+  .fact b{display:block;font-size:15px;margin-bottom:4px;}
+  .fact span{font-size:14px;color:var(--muted);}
+  .fine{font-size:13px;color:var(--muted);margin-top:34px;max-width:70ch;}
+  footer{padding:44px 0 64px;font-size:13px;color:var(--muted);}
+  footer a{color:var(--muted);}
+  @media(max-width:860px){h1{font-size:40px;} h2{font-size:30px;} .cards,.quotes,.demo,.facts{grid-template-columns:1fr;} .navlinks{display:none;} section{padding:72px 0;}}
 </style>
 </head>
 <body>
 
-<div class="wrap">
-  <div class="bar">
-    <div class="logo">Lea<span>.</span> <span style="font-weight:500;color:var(--muted);font-size:13px">by Legali</span></div>
-    <div class="exit">
-      <a class="exit-btn" href="#safety">Safety &amp; privacy</a>
-      <a class="exit-btn hot" href="https://weather.com">Quick exit</a>
+<nav>
+  <div class="wrap">
+    <div class="brand">legali<span>.</span></div>
+    <div class="navlinks">
+      <a href="#what">What we do</a>
+      <a href="#products">Products</a>
+      <a href="#trial">Try it</a>
+      <a href="#proof">Proof</a>
+    </div>
+    <a class="cta" href="#trial">Try Legali</a>
+  </div>
+</nav>
+
+<section id="what">
+  <div class="wrap">
+    <p class="eyebrow reveal">Legali</p>
+    <h1 class="reveal d1">Justice, accessible to everyone.</h1>
+    <p class="lede reveal d2">Three in four people face a legal problem alone. Legali gives them a way through it: plain language, one step at a time, in the language they actually speak.</p>
+    <p class="sub reveal d3">We are not a law firm and we do not give legal advice. We explain the process, organize what you have, and show you what happens next. Every decision stays yours.</p>
+    <div class="stats reveal d3">
+      <div class="stat"><b>8,800</b><span>people served across Legali</span></div>
+      <div class="stat"><b>10</b><span>languages</span></div>
+      <div class="stat"><b>25+</b><span>pilot partners</span></div>
+      <div class="stat"><b>$0</b><span>spent on ads</span></div>
     </div>
   </div>
+</section>
 
-  <section class="hero">
-    <div>
-      <p class="eyebrow">For when it is too much to hold alone</p>
-      <h1>The AI action agent for when you are <em>overwhelmed</em>.</h1>
-      <p class="lede">Abuse, harassment, stalking. Lea answers your question straight, names the next step, and builds your record with you, so what happened to you is not just a memory you are carrying. Free to start, in 10 languages, on your phone.</p>
-      <div class="cta">
-        <a class="btn btn-primary" href="#">Talk to Lea now</a>
-        <a class="btn btn-ghost" href="#how">See what she actually does</a>
+<section id="products">
+  <div class="wrap">
+    <p class="eyebrow reveal">The ecosystem</p>
+    <h2 class="reveal d1">Three products, one path through the system.</h2>
+    <p class="sub reveal d2">They hand off to each other. Start wherever you are.</p>
+    <div class="cards">
+      <div class="card reveal d1">
+        <div class="dot"></div>
+        <h3>Lea</h3>
+        <p>A voice companion for survivors of abuse, harassment, stalking and cyberbullying. She listens first, then explains what your options are.</p>
+        <ul><li>1,400+ people, 10 languages</li><li>Disguise Mode and Quick Exit</li><li>Names the pattern, never files for you</li></ul>
       </div>
-      <p class="fineprint">No account needed to start. Disguise Mode makes Lea look like a fitness app. Two presses of volume down closes her instantly.</p>
+      <div class="card reveal d2">
+        <div class="dot"></div>
+        <h3>MyLegali</h3>
+        <p>Intake that turns your situation into an organized record: what happened, what you have, and where it needs to go.</p>
+        <ul><li>47 jurisdictions</li><li>Documents gathered in one place</li><li>Sources and dates on every step</li></ul>
+      </div>
+      <div class="card reveal d3">
+        <div class="dot"></div>
+        <h3>TeamLegali</h3>
+        <p>The same workflow for organizations carrying more cases than people: legal aid, campus teams, employers.</p>
+        <ul><li>20+ teams</li><li>Shared intake and handoffs</li><li>Human in the loop throughout</li></ul>
+      </div>
     </div>
+  </div>
+</section>
 
-    <div class="phone">
-      <div class="screen">
-        <div class="screen-top">LEA &middot; VOICE OR TEXT</div>
-        <div class="msgs">
-          <div class="b me">He checks my bank app every night and says it is because I am bad with money. I do not know if that is even a thing.</div>
-          <div class="b lea">It is a thing, and it has a name. Monitoring your money and framing it as help is financial control, and in a growing number of states it counts in family court whether or not it is a crime.</div>
-          <div class="b step">Next step: log tonight's check<small>I will timestamp it and keep it in your record. Six entries and you have a pattern, not a feeling.</small></div>
-          <div class="b step">Then: your rights, in your language<small>California, financial control. Sourced, dated, plain words.</small></div>
+<section id="trial">
+  <div class="wrap">
+    <p class="eyebrow reveal">Try it</p>
+    <h2 class="reveal d1">This is what a first conversation looks like.</h2>
+    <p class="sub reveal d2">No account, no forms. Pick an answer and watch what changes.</p>
+    <div class="demo">
+      <div class="phone reveal d1">
+        <div class="bubble">Take your time. What is going on right now?</div>
+        <div class="bubble me">Someone keeps posting about me and it will not stop.</div>
+        <div class="bubble">That has a name, and there are usually two things going on: whether you can take a step, and whether it is safe to. Which is closer?</div>
+        <div class="choices">
+          <button class="choice">I do not know what my options are</button>
+          <button class="choice">I know the option, it is not safe to use it</button>
+          <button class="choice">I could, and I am not going to yet</button>
         </div>
+        <p class="note" id="demoNote">Nothing here is scored, and nothing you skip counts against you.</p>
       </div>
-    </div>
-  </section>
-</div>
-
-<div class="strip">
-  <div class="wrap">
-    <h2>Most help stops at "you are not alone."</h2>
-    <div class="two">
-      <div class="card-dark old">
-        <p class="tag">What you usually get</p>
-        <p class="quote">"That sounds really hard. You are so brave for sharing. Have you thought about reaching out to someone you trust?"</p>
-      </div>
-      <div class="card-dark new">
-        <p class="tag">What Lea does</p>
-        <p class="quote">Answers the question you actually asked, then moves.</p>
-        <ul class="steps">
-          <li>Names what is happening, in plain words</li>
-          <li>Gives you the next concrete step, not a list of feelings</li>
-          <li>Does the parts she can do herself</li>
-          <li>Asks you first before anything you cannot undo</li>
-        </ul>
+      <div class="steps reveal d2">
+        <div class="step"><div class="num">1</div><p><b>She listens.</b> No intake form first. The situation comes out in your words, at your pace.</p></div>
+        <div class="step"><div class="num">2</div><p><b>She names it.</b> Harassment, wage theft, revenge porn, debt harassment. Naming it is often the part nobody has done for you.</p></div>
+        <div class="step"><div class="num">3</div><p><b>She shows the path.</b> What the process actually is, what each step costs you, and where a real person takes over.</p></div>
+        <div class="step"><div class="num">4</div><p><b>You decide.</b> Lea never concludes and never files. You keep every choice, including the choice to wait.</p></div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<div class="wrap">
-  <section class="sec" id="how">
-    <h2>Six things she does with you</h2>
-    <p class="sub">Recognition is the easy half. Proof is the hard half, and it lands on one person. Usually with no lawyer.</p>
-    <div class="grid">
-      <div class="card">
-        <span class="pill">Recognize</span>
-        <h3>Name it without a law degree</h3>
-        <p>Coercive control, financial monitoring, phone tracking, threats about immigration status or a pet. Lea tells you what the pattern is called and whether it counts where you live.</p>
-      </div>
-      <div class="card">
-        <span class="pill">Record</span>
-        <h3>Hold your own evidence</h3>
-        <p>Screenshots, dates, voice notes, incidents. Organized into a timeline you own and can export, built before a court ever asks for it.</p>
-      </div>
-      <div class="card">
-        <span class="pill">Rights</span>
-        <h3>Your rights in your language</h3>
-        <p>Emergency rights cards generated in the language you speak, with the source and the date they were last reviewed on the card.</p>
-      </div>
-      <div class="card">
-        <span class="pill">Handoff</span>
-        <h3>Get to a real person</h3>
-        <p>Hotlines, local organizations, and trauma-informed specialists, with your record ready to share if you choose to share it.</p>
-      </div>
-      <div class="card">
-        <span class="pill">Safety</span>
-        <h3>Safe on a watched phone</h3>
-        <p>Disguise Mode looks like a fitness app. Quick Exit takes two presses of volume down. Nothing is saved unless you turn saving on.</p>
-      </div>
-      <div class="card">
-        <span class="pill">Prepare</span>
-        <h3>Walk in ready</h3>
-        <p>What a court, a Title IX office, or a lawyer will ask for, what you already have, and the gap between the two.</p>
-      </div>
-    </div>
-  </section>
-</div>
-
-<div class="proof">
+<section id="proof">
   <div class="wrap">
-    <div class="proof-row">
-      <div><p class="num">10</p><p class="num-lab">languages, live today</p></div>
-      <div><p class="num">1,400+</p><p class="num-lab">people using Lea</p></div>
-      <div><p class="num">25+</p><p class="num-lab">pilots with orgs and clinics</p></div>
-      <div><p class="num">$0</p><p class="num-lab">spent on advertising</p></div>
+    <p class="eyebrow reveal">Proof and the fine print</p>
+    <h2 class="reveal d1">What people say, and what we hold ourselves to.</h2>
+    <div class="quotes">
+      <div class="quote reveal d1">
+        <p>“It explained the process in a way nobody had bothered to before.”</p>
+        <div class="who">Beta user, Stanford Shorenstein</div>
+      </div>
+      <div class="quote reveal d2">
+        <p>“The first thing that made the next step feel possible instead of enormous.”</p>
+        <div class="who">Pilot partner, legal aid</div>
+      </div>
     </div>
+    <div class="facts">
+      <div class="fact reveal d1"><b>SOC 2 Type II</b><span>GDPR and CCPA, HIPAA-grade handling, ISO 27001 control families.</span></div>
+      <div class="fact reveal d2"><b>Human in the loop</b><span>People review the work. Lea organizes and explains, she does not conclude.</span></div>
+      <div class="fact reveal d3"><b>Support in a day</b><span>support@legali.ai, replies within one business day, Mon to Fri, 9 to 5 PT.</span></div>
+    </div>
+    <p class="fine reveal">Legali is not a law firm and does not provide legal advice or create an attorney-client relationship. Individual results vary. If you are in immediate danger, call 911. National Domestic Violence Hotline 1-800-799-7233. Crisis and Suicide Lifeline 988. Crisis Text Line: text HOME to 741741.</p>
   </div>
-</div>
+</section>
 
-<div class="wrap">
-  <section class="sec">
-    <div class="founder">
-      <p>"I was seventeen. I called him my crush. It took me years and a law degree to call it what it was. Lea is the thing I needed in the years between."</p>
-      <p class="who">Irawati Puteri, founder of Legali. Stanford Law alum and survivor.</p>
-    </div>
-  </section>
-</div>
+<footer>
+  <div class="wrap">Legali AI · San Francisco and Jakarta · <a href="mailto:support@legali.ai">support@legali.ai</a></div>
+</footer>
 
-<div class="safety" id="safety">
-  <div class="wrap">
-    <h2>If you are in danger right now</h2>
-    <div class="nums">
-      <div><b>911</b> for immediate danger in the US</div>
-      <div><b>1-800-799-7233</b> National Domestic Violence Hotline, 24/7</div>
-      <div><b>Text START to 88788</b> if a call is not safe</div>
-      <div><b>988</b> Suicide &amp; Crisis Lifeline</div>
-      <div><b>741741</b> Crisis Text Line, text HOME</div>
-      <div><b>1-800-422-4453</b> Childhelp, for anyone under 18</div>
-    </div>
-    <p class="limits">Lea organizes and explains. She does not give legal advice, does not decide your case, and does not file anything for you. Disguise Mode changes what Lea looks like on your screen. It does not hide that an app is installed, so if someone checks your phone, plan for that with an advocate. Anything you spend money on or send to another person, Lea asks you first, every time.</p>
-    <div class="foot">
-      <div>Lea, by Legali AI. Built by a survivor, for the years before anyone believes you.</div>
-      <div>lea.legali.ai &middot; privacy &middot; a11y &middot; press</div>
-    </div>
-  </div>
-</div>
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:.16});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
+  const notes = [
+    "Not knowing the option is a knowledge gap. Lea walks you through it.",
+    "Knowing but not being able to act safely is an access problem, and it needs the opposite help.",
+    "Waiting is a real answer. Nothing closes, and nothing counts against you."
+  ];
+  document.querySelectorAll('.choice').forEach((b,i)=>{
+    b.addEventListener('click',()=>{
+      document.querySelectorAll('.choice').forEach(x=>x.classList.remove('sel'));
+      b.classList.add('sel');
+      document.getElementById('demoNote').textContent = notes[i];
+    });
+  });
+</script>
 </body>
 </html>
