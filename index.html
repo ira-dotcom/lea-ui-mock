@@ -5,78 +5,152 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Weather</title>
 <style>
-  :root{--bg:#0f1113;--panel:#17191c;--line:#25282c;--ink:#f2f3f4;--muted:#9aa1a8;--accent:#7f9f8a;--accent2:#c9d8cf;--danger:#c2554b}
+  /* Text size: everything below is in rem, so the Text size setting scales the whole app. */
+  html{font-size:17px}
+  html[data-ts="large"]{font-size:19px}
+  html[data-ts="larger"]{font-size:21px}
+  :root{--bg:#0f1113;--panel:#17191c;--line:#2c3035;--ink:#f2f3f4;--muted:#b3b9bf;--accent:#7f9f8a;--accent2:#c9d8cf;--danger:#c2554b;--card:#1d2024}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;padding:0;height:100%}
-  body{background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;display:flex;align-items:center;justify-content:center}
-  .frame{width:100%;max-width:430px;height:100dvh;max-height:920px;background:var(--panel);display:flex;flex-direction:column;border-left:1px solid var(--line);border-right:1px solid var(--line);position:relative;overflow:hidden}
-  @media(min-width:520px){.frame{border-radius:18px;height:88dvh;box-shadow:0 24px 60px rgba(0,0,0,.5)}}
-  .top{display:flex;align-items:center;gap:10px;padding:14px 14px 12px;border-bottom:1px solid var(--line);flex:0 0 auto}
-  .mark{width:26px;height:26px;border-radius:8px;background:var(--accent);display:grid;place-items:center;font-size:13px;font-weight:700;color:#0f1113}
-  .name{font-weight:600;letter-spacing:.2px}
-  .pill{margin-left:auto;font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 10px;cursor:pointer}
-  .exit{font-size:13px;font-weight:600;color:#fff;background:var(--danger);border:0;border-radius:999px;padding:8px 14px;cursor:pointer}
-  .tabs{display:flex;gap:4px;padding:8px 10px 0;flex:0 0 auto}
-  .tab{flex:1;text-align:center;font-size:13px;color:var(--muted);padding:9px 6px;border-radius:10px 10px 0 0;cursor:pointer;border-bottom:2px solid transparent}
-  .tab.on{color:var(--ink);border-bottom-color:var(--accent)}
-  .body{flex:1 1 auto;overflow-y:auto;padding:16px 14px 8px}
+  body{background:var(--bg);color:var(--ink);font:1rem/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;display:flex;align-items:center;justify-content:center}
+  button{font:inherit}
+  .frame{width:100%;max-width:440px;height:100dvh;max-height:940px;background:var(--panel);display:flex;flex-direction:column;border-left:1px solid var(--line);border-right:1px solid var(--line);position:relative;overflow:hidden}
+  @media(min-width:520px){.frame{border-radius:18px;height:92dvh;box-shadow:0 24px 60px rgba(0,0,0,.5)}}
+  .top{display:flex;align-items:center;gap:10px;padding:.8rem .85rem .7rem;border-bottom:1px solid var(--line);flex:0 0 auto}
+  .mark{width:1.7rem;height:1.7rem;border-radius:8px;background:var(--accent);display:grid;place-items:center;font-size:.85rem;font-weight:700;color:#0f1113}
+  .name{font-weight:600;letter-spacing:.2px;font-size:1.05rem}
+  .pill{font-size:.8rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:.3rem .7rem;cursor:pointer;background:transparent}
+  .top .pill:first-of-type{margin-left:auto}
+  .tabs{display:flex;gap:2px;padding:.4rem .5rem 0;flex:0 0 auto;border-bottom:1px solid var(--line)}
+  .tab{flex:1;text-align:center;font-size:.85rem;color:var(--muted);padding:.6rem .2rem;cursor:pointer;border-bottom:3px solid transparent;background:none;border-top:0;border-left:0;border-right:0}
+  .tab.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  .body{flex:1 1 auto;overflow-y:auto;padding:1rem .9rem .6rem}
   .view{display:none}.view.on{display:block}
-  .hello{font-size:21px;line-height:1.35;margin:6px 0 10px}
-  .sub{color:var(--muted);font-size:14px;margin:0 0 18px}
-  .chip{display:block;width:100%;text-align:left;background:#1d2024;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:13px 14px;margin-bottom:9px;font-size:14.5px;cursor:pointer}
+  .hello{font-size:1.3rem;line-height:1.35;margin:.3rem 0 .6rem}
+  .sub{color:var(--muted);font-size:.95rem;margin:0 0 1rem}
+  .chip{display:block;width:100%;text-align:left;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:.8rem .9rem;margin-bottom:.55rem;font-size:.95rem;cursor:pointer}
   .chip:hover{border-color:var(--accent)}
-  .note{margin-top:16px;font-size:12.5px;color:var(--muted);border-left:2px solid var(--line);padding-left:10px}
-  .note a{color:var(--accent2)}
-  .msg{max-width:86%;padding:11px 13px;border-radius:14px;margin-bottom:10px;font-size:15px}
+  .note{margin-top:1rem;font-size:.85rem;color:var(--muted);border-left:3px solid var(--line);padding-left:.7rem}
+  .note a,.link{color:var(--accent2);cursor:pointer;text-decoration:underline}
+  .msg{max-width:88%;padding:.7rem .85rem;border-radius:14px;margin-bottom:.6rem;font-size:1rem}
   .me{margin-left:auto;background:#2a2f34;border-bottom-right-radius:5px}
-  .lea{background:#1d2024;border:1px solid var(--line);border-bottom-left-radius:5px}
-  .ask{margin:2px 0 12px;padding:11px 13px;border:1px dashed var(--line);border-radius:12px;font-size:14px;color:var(--muted)}
-  .ask select{margin-top:8px;width:100%;background:#15171a;color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:9px}
-  .card{background:#1d2024;border:1px solid var(--line);border-radius:12px;padding:13px;margin-bottom:10px}
-  .card h4{margin:0 0 4px;font-size:14.5px;font-weight:600}
-  .meta{font-size:12px;color:var(--muted);margin-bottom:8px}
-  .tagrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
-  .tag{font-size:11px;color:var(--accent2);border:1px solid var(--line);border-radius:999px;padding:3px 8px}
-  .hash{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--muted);margin-top:8px}
-  .export{width:100%;background:transparent;color:var(--accent2);border:1px solid var(--accent);border-radius:11px;padding:12px;font-size:14px;cursor:pointer;margin-top:4px}
-  .row{display:flex;align-items:center;gap:12px;padding:14px 2px;border-bottom:1px solid var(--line);font-size:14.5px}
-  .row small{display:block;color:var(--muted);font-size:12.5px;margin-top:3px}
-  .sw{margin-left:auto;width:44px;height:26px;border-radius:999px;background:#33383d;position:relative;cursor:pointer;flex:0 0 auto}
-  .sw i{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.18s}
-  .sw.on{background:var(--accent)}.sw.on i{left:21px}
-  .composer{flex:0 0 auto;display:flex;gap:8px;align-items:center;padding:10px 12px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
-  .composer input{flex:1;background:#15171a;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:12px 15px;font-size:15px;outline:none}
-  .icon{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:#15171a;color:var(--ink);font-size:17px;cursor:pointer;flex:0 0 auto}
+  .lea{background:var(--card);border:1px solid var(--line);border-bottom-left-radius:5px}
+  .ask{margin:2px 0 .8rem;padding:.7rem .85rem;border:1px dashed var(--line);border-radius:12px;font-size:.9rem;color:var(--muted)}
+  .ask select{margin-top:.5rem;width:100%;background:#15171a;color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:.55rem;font-size:.95rem}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.85rem;margin-bottom:.6rem}
+  .card h4{margin:0 0 .25rem;font-size:1rem;font-weight:600}
+  .meta{font-size:.8rem;color:var(--muted);margin-bottom:.45rem}
+  .tagrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:.55rem}
+  .tag{font-size:.75rem;color:var(--accent2);border:1px solid var(--line);border-radius:999px;padding:.15rem .55rem}
+  .hash{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;color:var(--muted);margin-top:.5rem}
+  .btn{width:100%;border-radius:12px;padding:.8rem;font-size:.95rem;cursor:pointer;font-weight:600}
+  .btn.primary{background:var(--accent);color:#0f1113;border:1px solid var(--accent)}
+  .btn.ghost{background:transparent;color:var(--accent2);border:1px solid var(--accent)}
+  .explain{background:#1a2420;border:1px solid #2f4238;border-radius:12px;padding:.85rem;margin-bottom:.9rem;font-size:.92rem}
+  .explain b{display:block;margin-bottom:.2rem;font-size:1rem}
+  .h{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:1.2rem 0 .3rem}
+  .row{display:flex;align-items:center;gap:12px;padding:.85rem 2px;border-bottom:1px solid var(--line);font-size:.95rem}
+  .row small{display:block;color:var(--muted);font-size:.82rem;margin-top:3px}
+  .sw{margin-left:auto;width:48px;height:28px;border-radius:999px;background:#3a4046;position:relative;cursor:pointer;flex:0 0 auto;border:0}
+  .sw i{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.18s}
+  .sw.on{background:var(--accent)}.sw.on i{left:23px}
+  .seg{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-left:auto;flex:0 0 auto}
+  .seg button{background:transparent;color:var(--muted);border:0;padding:.35rem .6rem;cursor:pointer}
+  .seg button.on{background:var(--accent);color:#0f1113;font-weight:600}
+  .seg button:nth-child(1){font-size:.8rem}.seg button:nth-child(2){font-size:.95rem}.seg button:nth-child(3){font-size:1.1rem}
+  .priv{display:flex;gap:.7rem;padding:.6rem 0;font-size:.92rem}
+  .priv .ic{flex:0 0 2rem;height:2rem;border-radius:10px;background:#22302a;display:grid;place-items:center}
+  .priv b{display:block}
+  .composer{flex:0 0 auto;display:flex;gap:8px;align-items:center;padding:.6rem .75rem;border-top:1px solid var(--line)}
+  .composer input{flex:1;min-width:0;background:#15171a;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:.7rem .95rem;font-size:1rem;outline:none}
+  .icon{width:2.6rem;height:2.6rem;border-radius:50%;border:1px solid var(--line);background:#15171a;color:var(--ink);font-size:1.05rem;cursor:pointer;flex:0 0 auto}
   .icon.send{background:var(--accent);border-color:var(--accent);color:#0f1113;font-weight:700}
-  #disguise{position:absolute;inset:0;background:#0b1220;color:#e8eef7;display:none;flex-direction:column;padding:26px 22px}
-  #disguise.on{display:flex}
-  .wcity{font-size:15px;color:#9fb3cd;letter-spacing:.4px}
-  .wtemp{font-size:74px;font-weight:200;line-height:1.05;margin:6px 0 0;cursor:pointer}
-  .wdesc{color:#9fb3cd;margin-bottom:26px}
-  .wgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:auto;margin-bottom:22px}
-  .wday{background:#121c2e;border-radius:12px;padding:12px 6px;text-align:center;font-size:12px;color:#9fb3cd}
-  .wday b{display:block;color:#e8eef7;font-size:16px;font-weight:400;margin-top:6px}
-  .back{background:transparent;border:1px solid #1e2c44;color:#6d86a6;border-radius:11px;padding:11px;font-size:13px;cursor:pointer}
-  #gone{position:absolute;inset:0;background:#fff;display:none;place-items:center;text-align:center;padding:30px}
+  /* Quick exit: full-width bar pinned to the bottom, in the thumb zone, part of the layout so it never covers content. */
+  .qx{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;min-height:3.4rem;background:var(--danger);color:#fff;border:0;font-size:1.05rem;font-weight:700;letter-spacing:.3px;cursor:pointer;padding:.5rem 1rem calc(.5rem + env(safe-area-inset-bottom))}
+  .qx span{font-weight:400;font-size:.82rem;opacity:.92}
+  .qx:active{filter:brightness(.9)}
+  /* Sheets and overlays */
+  .scrim{position:absolute;inset:0;background:rgba(0,0,0,.55);display:none;z-index:20}
+  .scrim.on{display:block}
+  .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--panel);border-top:1px solid var(--line);border-radius:18px 18px 0 0;padding:1.1rem 1rem 1.2rem;z-index:21;transform:translateY(105%);transition:transform .22s ease;max-height:88%;overflow-y:auto}
+  .sheet.on{transform:none}
+  .sheet h3{margin:0 0 .4rem;font-size:1.15rem}
+  .opt{display:flex;align-items:center;gap:.8rem;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.8rem;margin-bottom:.5rem;color:var(--ink);cursor:pointer;font-size:.95rem}
+  .opt .ic{flex:0 0 2.3rem;height:2.3rem;border-radius:10px;background:#22302a;display:grid;place-items:center}
+  .opt small{display:block;color:var(--muted);font-size:.8rem}
+  .opt.sel{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+  .appicons{display:flex;align-items:center;justify-content:center;gap:1rem;margin:.9rem 0}
+  .appicon{text-align:center;font-size:.8rem;color:var(--muted)}
+  .appicon div{width:3.3rem;height:3.3rem;border-radius:14px;display:grid;place-items:center;margin:0 auto .3rem;font-weight:700;font-size:1.2rem}
+  .arrow{color:var(--muted);font-size:1.4rem}
+  textarea{width:100%;min-height:6rem;background:#15171a;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:.6rem;font:inherit;font-size:.95rem}
+  .toast{position:absolute;left:50%;top:5.2rem;transform:translateX(-50%);background:#2a3a31;color:var(--ink);border:1px solid #3d5546;border-radius:999px;padding:.45rem .9rem;font-size:.85rem;z-index:30;display:none;white-space:nowrap}
+  .toast.on{display:block}
+  /* Onboarding: one idea per screen, with a picture */
+  #onb{position:absolute;inset:0;background:var(--panel);z-index:25;display:none;flex-direction:column;padding:1rem 1.1rem 1.1rem}
+  #onb.on{display:flex}
+  .onbtop{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;color:var(--muted)}
+  .onbtop button{background:none;border:0;color:var(--accent2);cursor:pointer;text-decoration:underline;font-size:.85rem}
+  .step{display:none;flex:1;flex-direction:column;justify-content:center;text-align:center}
+  .step.on{display:flex}
+  .step svg{width:min(62%,210px);height:auto;margin:0 auto 1.1rem}
+  .step h2{font-size:1.35rem;margin:0 0 .6rem;line-height:1.3}
+  .step p{color:var(--muted);font-size:1rem;margin:0 auto .5rem;max-width:22rem}
+  .dots{display:flex;gap:7px;justify-content:center;margin:.6rem 0 .9rem}
+  .dots i{width:8px;height:8px;border-radius:50%;background:#3a4046}
+  .dots i.on{background:var(--accent)}
+  .onbnav{display:flex;gap:.6rem}
+  .onbnav .btn{flex:1}
+  /* Learn module: short cards with a picture each */
+  .lcard{display:none;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem;text-align:center}
+  .lcard.on{display:block}
+  .lcard svg{width:58%;max-width:180px;height:auto;margin:.2rem auto .7rem;display:block}
+  .lcard h4{margin:0 0 .4rem;font-size:1.08rem}
+  .lcard p{margin:0;color:var(--muted);font-size:.95rem}
+  /* Disguise screens */
+  .disg{position:absolute;inset:0;display:none;flex-direction:column;padding:1.6rem 1.3rem;z-index:40}
+  .disg.on{display:flex}
+  #d-weather{background:#0b1220;color:#e8eef7}
+  .wcity{font-size:.9rem;color:#9fb3cd;letter-spacing:.4px}
+  .wtemp{font-size:4.4rem;font-weight:200;line-height:1.05;margin:6px 0 0;cursor:pointer}
+  .wdesc{color:#9fb3cd;margin-bottom:1.5rem}
+  .wgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:auto;margin-bottom:1.3rem}
+  .wday{background:#121c2e;border-radius:12px;padding:.7rem .3rem;text-align:center;font-size:.75rem;color:#9fb3cd}
+  .wday b{display:block;color:#e8eef7;font-size:1rem;font-weight:400;margin-top:6px}
+  #d-notes{background:#fbfaf7;color:#222}
+  #d-notes h1{font-size:1.8rem;margin:.2rem 0 1rem;cursor:pointer}
+  #d-notes .n{border-bottom:1px solid #e6e2da;padding:.7rem 0;font-size:.95rem}
+  #d-notes .n small{display:block;color:#8a857c}
+  #d-calc{background:#000;color:#fff}
+  #d-calc .disp{font-size:3.6rem;text-align:right;margin-top:auto;cursor:pointer;font-weight:300}
+  #d-calc .keys{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:.8rem}
+  #d-calc .keys div{aspect-ratio:1;border-radius:50%;background:#333;display:grid;place-items:center;font-size:1.3rem}
+  #d-calc .keys div.o{background:#f1a33c}
+  .hint{font-size:.75rem;opacity:.55;text-align:center;margin-top:.8rem}
+  #gone{position:absolute;inset:0;background:#fff;display:none;place-items:center;text-align:center;padding:30px;z-index:50}
   #gone.on{display:grid}
-  #gone div{color:#5b6470;font-size:14px}
+  #gone div{color:#5b6470;font-size:.9rem}
   #gone button{margin-top:16px;background:#eef1f4;border:1px solid #dde2e8;color:#5b6470;border-radius:10px;padding:10px 16px;cursor:pointer}
 </style>
 </head>
 <body>
-<div class="frame">
+<div class="frame" id="frame">
   <div class="top">
     <div class="mark">L</div>
     <div class="name">Lea</div>
-    <div class="pill">EN</div>
-    <button class="exit" id="exitBtn">Leave</button>
+    <button class="pill" id="tsQuick" title="Text size" aria-label="Change text size">Aa</button>
+    <button class="pill">EN</button>
   </div>
-  <div class="tabs">
-    <div class="tab on" data-v="chat">Talk</div>
-    <div class="tab" data-v="record">Your record</div>
-    <div class="tab" data-v="set">Safety</div>
+  <div class="tabs" role="tablist">
+    <button class="tab on" data-v="chat">Talk</button>
+    <button class="tab" data-v="record">Your record</button>
+    <button class="tab" data-v="learn">Learn</button>
+    <button class="tab" data-v="set">Safety &amp; privacy</button>
   </div>
+  <div class="toast" id="toast"></div>
   <div class="body" id="scroll">
+
+    <!-- TALK -->
     <div class="view on" id="v-chat">
       <div id="firstrun">
         <div class="hello">Hi. I can help you understand your options and keep a record of what's happening.</div>
@@ -84,83 +158,263 @@
         <button class="chip" data-q="How does a restraining order actually work?">How does a restraining order actually work?</button>
         <button class="chip" data-q="I want to write down something that happened.">I want to write down something that happened</button>
         <button class="chip" data-q="My employer fired me after I reported harassment.">My employer fired me after I reported harassment</button>
-        <div class="note">Nothing here is saved unless you ask me to save it. <b>Leave</b> clears this screen instantly. <a href="#" id="toDisguise">Make this look like something else</a>.</div>
+        <div class="note">Nothing here is saved unless you ask me to save it. The red <b>Quick exit</b> bar at the bottom clears this screen in one tap. <a id="toDisguise">Make this look like something else</a>.</div>
       </div>
       <div id="thread"></div>
     </div>
+
+    <!-- YOUR RECORD (vault) -->
     <div class="view" id="v-record">
-      <p class="sub" style="margin-top:4px">Three entries. Only you can see these.</p>
-      <div class="card">
-        <h4>Text messages after I asked him to stop</h4>
-        <div class="meta">14 Aug 2026, 9:40 PM &middot; home &middot; recorded 15 Aug</div>
-        <div>Screenshots of 22 messages sent between 9:40 PM and 1:15 AM.</div>
-        <div class="tagrow"><span class="tag">4 screenshots</span><span class="tag">timestamped</span><span class="tag">not filed</span></div>
-        <div class="hash">sha256 3f9a1c&hellip;e7b204 &middot; sealed on capture</div>
+      <div class="explain"><b>How your record works</b>Nothing goes in on its own. You add each entry yourself: something you write, a screenshot, a document or a voice memo. Each one is dated and sealed so it can't be quietly changed later, and you can delete any of it whenever you want.</div>
+      <button class="btn primary" id="addBtn">+ Add to your record</button>
+      <p class="sub" style="margin:1rem 0 .6rem" id="recCount">3 entries. Only you can see these.</p>
+      <div id="entries">
+        <div class="card">
+          <h4>Text messages after I asked him to stop</h4>
+          <div class="meta">14 Aug 2026, 9:40 PM &middot; home &middot; added 15 Aug</div>
+          <div>Screenshots of 22 messages sent between 9:40 PM and 1:15 AM.</div>
+          <div class="tagrow"><span class="tag">4 screenshots</span><span class="tag">timestamped</span><span class="tag">not shared</span></div>
+          <div class="hash">sealed on capture &middot; sha256 3f9a1c&hellip;e7b204</div>
+        </div>
+        <div class="card">
+          <h4>Incident at the apartment</h4>
+          <div class="meta">2 Aug 2026, about 7 PM &middot; 2 people present &middot; added 3 Aug</div>
+          <div>Written in your own words. 340 words.</div>
+          <div class="tagrow"><span class="tag">1 photo</span><span class="tag">witness named</span><span class="tag">not shared</span></div>
+          <div class="hash">sealed on capture &middot; sha256 be0742&hellip;19cc8a</div>
+        </div>
+        <div class="card">
+          <h4>Termination letter</h4>
+          <div class="meta">28 Jul 2026 &middot; added 28 Jul</div>
+          <div>PDF from employer, 2 pages.</div>
+          <div class="tagrow"><span class="tag">1 document</span><span class="tag">not shared</span></div>
+          <div class="hash">sealed on capture &middot; sha256 a41d90&hellip;77f3e1</div>
+        </div>
       </div>
-      <div class="card">
-        <h4>Incident at the apartment</h4>
-        <div class="meta">2 Aug 2026, about 7 PM &middot; 2 people present &middot; recorded 3 Aug</div>
-        <div>Written in your own words. 340 words.</div>
-        <div class="tagrow"><span class="tag">1 photo</span><span class="tag">witness named</span><span class="tag">not filed</span></div>
-        <div class="hash">sha256 be0742&hellip;19cc8a &middot; sealed on capture</div>
-      </div>
-      <div class="card">
-        <h4>Termination letter</h4>
-        <div class="meta">28 Jul 2026 &middot; recorded 28 Jul</div>
-        <div>PDF from employer, 2 pages.</div>
-        <div class="tagrow"><span class="tag">1 document</span><span class="tag">not filed</span></div>
-        <div class="hash">sha256 a41d90&hellip;77f3e1 &middot; sealed on capture</div>
-      </div>
-      <button class="export" id="exportBtn">Build a chronology I can hand to a lawyer</button>
+      <button class="btn ghost" id="exportBtn" style="margin-top:.3rem">Build a chronology I can hand to a lawyer</button>
     </div>
+
+    <!-- LEARN -->
+    <div class="view" id="v-learn">
+      <p class="sub" style="margin-top:.2rem">Short lessons, one idea at a time. Stop whenever you like.</p>
+      <div class="card" style="padding:.7rem .85rem"><b>What is coercive control?</b><div class="meta" style="margin:0">4 short cards &middot; about 2 minutes</div></div>
+      <div id="lcards">
+        <div class="lcard on">
+          <svg viewBox="0 0 200 120"><circle cx="100" cy="60" r="22" fill="#7f9f8a"/><circle cx="40" cy="40" r="12" fill="#3a4046"/><circle cx="160" cy="40" r="12" fill="#3a4046"/><circle cx="45" cy="95" r="12" fill="#3a4046"/><circle cx="155" cy="95" r="12" fill="#3a4046"/><path d="M58 46 78 54M142 46 122 54M62 90 80 72M138 90 120 72" stroke="#c2554b" stroke-width="3" stroke-dasharray="4 4"/></svg>
+          <h4>It's a pattern, not one moment</h4>
+          <p>Coercive control is a pattern of behaviour that slowly takes away someone's freedom. Each act can look small on its own.</p>
+        </div>
+        <div class="lcard">
+          <svg viewBox="0 0 200 120"><rect x="70" y="18" width="60" height="90" rx="10" fill="#1d2024" stroke="#7f9f8a" stroke-width="3"/><circle cx="100" cy="60" r="14" fill="none" stroke="#c9d8cf" stroke-width="3"/><path d="M100 46v-14M100 74v14M86 60H72M114 60h14" stroke="#c9d8cf" stroke-width="3"/></svg>
+          <h4>Watching and checking</h4>
+          <p>Going through your phone, tracking where you are, or needing to know who you talk to.</p>
+        </div>
+        <div class="lcard">
+          <svg viewBox="0 0 200 120"><rect x="40" y="35" width="120" height="60" rx="10" fill="#1d2024" stroke="#7f9f8a" stroke-width="3"/><circle cx="100" cy="65" r="15" fill="none" stroke="#c9d8cf" stroke-width="3"/><path d="M30 20 170 110" stroke="#c2554b" stroke-width="4"/></svg>
+          <h4>Money and isolation</h4>
+          <p>Controlling your money, stopping you from working, or cutting you off from friends and family.</p>
+        </div>
+        <div class="lcard">
+          <svg viewBox="0 0 200 120"><rect x="60" y="20" width="80" height="85" rx="8" fill="#1d2024" stroke="#7f9f8a" stroke-width="3"/><path d="M75 42h50M75 58h50M75 74h32" stroke="#c9d8cf" stroke-width="3"/><circle cx="135" cy="92" r="16" fill="#7f9f8a"/><path d="M128 92l5 5 10-10" stroke="#0f1113" stroke-width="3" fill="none"/></svg>
+          <h4>Writing it down helps</h4>
+          <p>Because it's a pattern, dated notes matter. You can add them to your record whenever you're ready, or not at all.</p>
+        </div>
+      </div>
+      <div class="dots" id="ldots"><i class="on"></i><i></i><i></i><i></i></div>
+      <div class="onbnav"><button class="btn ghost" id="lprev">Back</button><button class="btn primary" id="lnext">Next</button></div>
+    </div>
+
+    <!-- SAFETY & PRIVACY -->
     <div class="view" id="v-set">
-      <div class="row">Disguise this app<small>Shows a weather screen. Tap the temperature three times to come back.</small><div class="sw" id="sw1"><i></i></div></div>
-      <div class="row">Save our conversation<small>Off. Nothing is stored on this device or ours until you turn this on.</small><div class="sw" id="sw2"><i></i></div></div>
-      <div class="row">Let Lea text me<small>Off. A text from us would appear on a phone bill and on your lock screen.</small><div class="sw" id="sw3"><i></i></div></div>
-      <div class="row">Language<small>English. Ten available.</small><div class="pill" style="margin-left:auto">Change</div></div>
+      <div class="h">Reading</div>
+      <div class="row">Text size<small>Makes every screen easier to read.</small>
+        <div class="seg" id="tsSeg"><button data-ts="standard">A</button><button data-ts="large" >A</button><button data-ts="larger">A</button></div></div>
+      <div class="h">Staying safe</div>
+      <div class="row">Quick exit<small>The red bar at the bottom of every screen. One tap clears Lea straight away, with no "are you sure?". On a computer, pressing Esc twice does the same.</small></div>
+      <div class="row">Disguise this app<small id="disgDesc">Off. Lea can look and be named like an ordinary app.</small><button class="pill" id="disgSetup" style="margin-left:auto">Set up</button></div>
+      <div class="row">Let Lea text me<small>Off. A text from us would appear on a phone bill and on your lock screen.</small><button class="sw" id="sw3" aria-label="Let Lea text me"><i></i></button></div>
+      <div class="row">Language<small>English. 15 available.</small><button class="pill" style="margin-left:auto">Change</button></div>
+      <div class="h">How your information is protected</div>
+      <div class="priv"><div class="ic">&#128274;</div><div><b>Your record is locked with your PIN</b>It's encrypted so that only you can open it. We can't read it.</div></div>
+      <div class="priv"><div class="ic">&#128172;</div><div><b>Talking doesn't save anything</b>Conversations aren't kept unless you turn on saving below.</div></div>
+      <div class="row" style="border-top:1px solid var(--line)">Save our conversation<small>Off. Nothing is stored on this device or ours until you turn this on.</small><button class="sw" id="sw2" aria-label="Save our conversation"><i></i></button></div>
+      <div class="priv"><div class="ic">&#128065;</div><div><b>You decide who sees what</b>Nobody, including a lawyer or counselor, sees anything unless you choose to share it.</div></div>
+      <div class="priv"><div class="ic">&#128465;</div><div><b>Delete anything, any time</b>One entry or everything. Gone means gone.</div></div>
+      <div class="note" style="margin-bottom:.8rem">You can delete any of it, or all of it, whenever you want. You can talk to her without saving a word. Quick Exit is always one tap away, and leaving takes nothing more than closing the app.</div>
+      <a class="link" id="replay">Show me how Lea works again</a>
     </div>
   </div>
-  <div class="composer">
-    <button class="icon" title="Speak">&#127908;</button>
+
+  <div class="composer" id="composer">
+    <button class="icon" title="Speak" aria-label="Speak">&#127908;</button>
     <input id="input" placeholder="Type, or tap the mic" autocomplete="off">
-    <button class="icon send" id="send">&#8593;</button>
+    <button class="icon send" id="send" aria-label="Send">&#8593;</button>
   </div>
-  <div id="disguise">
-    <div class="wcity">OAKLAND</div>
-    <div class="wtemp" id="temp">17&deg;</div>
-    <div class="wdesc">Partly cloudy &middot; feels like 16&deg;</div>
-    <div class="wgrid">
-      <div class="wday">FRI<b>18&deg;</b></div>
-      <div class="wday">SAT<b>19&deg;</b></div>
-      <div class="wday">SUN<b>17&deg;</b></div>
-      <div class="wday">MON<b>16&deg;</b></div>
+  <button class="qx" id="exitBtn" aria-label="Quick exit: closes Lea now">&#10005; Quick exit <span>one tap, closes Lea</span></button>
+
+  <!-- Add to record sheet -->
+  <div class="scrim" id="scrim"></div>
+  <div class="sheet" id="addSheet">
+    <h3>Add to your record</h3>
+    <p class="sub">Pick what you want to add. It's dated and sealed when you save it.</p>
+    <button class="opt" data-add="write"><div class="ic">&#9998;</div><div>Write what happened<small>In your own words. Lea can ask short questions if that helps.</small></div></button>
+    <button class="opt" data-add="photo"><div class="ic">&#128247;</div><div>Screenshot or photo<small>From your camera roll. Original date and time are kept.</small></div></button>
+    <button class="opt" data-add="doc"><div class="ic">&#128196;</div><div>Document<small>A letter, a PDF, a bank statement.</small></div></button>
+    <button class="opt" data-add="voice"><div class="ic">&#127908;</div><div>Voice memo<small>Say it instead of typing it.</small></div></button>
+    <div id="writeBox" style="display:none">
+      <textarea id="writeText" placeholder="What happened? Add as much or as little as you want."></textarea>
+      <button class="btn primary" id="saveWrite" style="margin-top:.5rem">Save to your record</button>
     </div>
-    <button class="back" id="back">Tap the temperature 3 times to return</button>
+    <button class="btn ghost" id="closeAdd" style="margin-top:.4rem">Not now</button>
+  </div>
+
+  <!-- Disguise setup sheet -->
+  <div class="sheet" id="disgSheet">
+    <h3>Disguise this app</h3>
+    <p class="sub">Lea will look like a different app, and her name on your home screen changes too. Remember the new name so you can find her again.</p>
+    <button class="opt sel" data-d="weather"><div class="ic">&#9925;</div><div>Weather<small>Tap the temperature 3 times to come back.</small></div></button>
+    <button class="opt" data-d="notes"><div class="ic">&#128221;</div><div>Notes<small>Tap the title "Notes" 3 times to come back.</small></div></button>
+    <button class="opt" data-d="calc"><div class="ic">&#128290;</div><div>Calculator<small>Tap the number display 3 times to come back.</small></div></button>
+    <div class="appicons">
+      <div class="appicon"><div style="background:#7f9f8a;color:#0f1113">L</div>Lea</div>
+      <div class="arrow">&rarr;</div>
+      <div class="appicon"><div id="newIcon" style="background:#0b1220;color:#e8eef7">&#9925;</div><span id="newName">Weather</span></div>
+    </div>
+    <div class="explain" id="disgExplain" style="margin-bottom:.7rem">On your home screen, look for <b style="display:inline">Weather</b>. To get back into Lea, tap the temperature 3 times.</div>
+    <button class="btn primary" id="disgOn">Turn on and show me</button>
+    <button class="btn ghost" id="disgOff" style="margin-top:.5rem">Turn off disguise</button>
+    <button class="btn ghost" id="closeDisg" style="margin-top:.5rem;border-color:var(--line);color:var(--muted)">Close</button>
+  </div>
+
+  <!-- Onboarding: how Lea works, one screen at a time -->
+  <div id="onb" class="on">
+    <div class="onbtop"><span id="onbCount">1 of 5</span><button id="onbSkip">Skip</button></div>
+    <div class="step on">
+      <svg viewBox="0 0 200 130"><circle cx="55" cy="55" r="20" fill="#7f9f8a"/><circle cx="100" cy="45" r="20" fill="#c9d8cf"/><circle cx="145" cy="55" r="20" fill="#a98f6f"/><rect x="30" y="80" width="50" height="38" rx="18" fill="#7f9f8a"/><rect x="75" y="70" width="50" height="48" rx="18" fill="#c9d8cf"/><rect x="120" y="80" width="50" height="38" rx="18" fill="#a98f6f"/></svg>
+      <h2>Who Lea is for</h2>
+      <p>Anyone who has been hurt, controlled or harassed by someone, whatever your gender and whatever the relationship.</p>
+      <p>She talks in 15 languages. Her legal information is based on US law, so outside the US it's a starting point, not an answer.</p>
+    </div>
+    <div class="step">
+      <svg viewBox="0 0 200 130"><rect x="20" y="20" width="110" height="40" rx="16" fill="#1d2024" stroke="#7f9f8a" stroke-width="3"/><path d="M38 40h74" stroke="#c9d8cf" stroke-width="4" stroke-linecap="round"/><rect x="70" y="72" width="110" height="40" rx="16" fill="#2a2f34"/><path d="M88 92h74" stroke="#9aa1a8" stroke-width="4" stroke-linecap="round"/></svg>
+      <h2>Talk at your own pace</h2>
+      <p>Type or speak, any hour. Lea explains things in plain words.</p>
+      <p>There's no pressure to report or decide anything. What you do next stays your choice.</p>
+    </div>
+    <div class="step">
+      <svg viewBox="0 0 200 130"><rect x="45" y="30" width="110" height="80" rx="12" fill="#1d2024" stroke="#3a4046" stroke-width="3"/><rect x="55" y="22" width="90" height="16" rx="6" fill="#3a4046"/><rect x="60" y="48" width="80" height="14" rx="5" fill="#7f9f8a"/><rect x="60" y="68" width="80" height="14" rx="5" fill="#c9d8cf"/><rect x="60" y="88" width="50" height="14" rx="5" fill="#a98f6f"/><circle cx="160" cy="105" r="17" fill="#7f9f8a"/><path d="M160 96v18M151 105h18" stroke="#0f1113" stroke-width="4"/></svg>
+      <h2>You choose what's kept</h2>
+      <p>Your record holds the things you decide to add: notes, screenshots, voice memos, documents. Nothing goes in automatically.</p>
+      <p>When you're ready, Lea can turn it into a dated timeline for a lawyer or therapist.</p>
+    </div>
+    <div class="step">
+      <svg viewBox="0 0 200 130"><rect x="65" y="55" width="70" height="60" rx="10" fill="#7f9f8a"/><path d="M80 55V40a20 20 0 0 1 40 0v15" fill="none" stroke="#c9d8cf" stroke-width="7"/><circle cx="100" cy="82" r="7" fill="#0f1113"/><rect x="97" y="84" width="6" height="16" rx="3" fill="#0f1113"/></svg>
+      <h2>Your information stays yours</h2>
+      <p>Your record is locked with a PIN only you know. We can't read it.</p>
+      <p>Nobody sees anything unless you share it, and you can delete anything at any time.</p>
+    </div>
+    <div class="step">
+      <svg viewBox="0 0 200 130"><rect x="62" y="6" width="76" height="120" rx="12" fill="#17191c" stroke="#3a4046" stroke-width="3"/><path d="M72 26h56M72 38h40M72 50h50" stroke="#3a4046" stroke-width="4"/><rect x="65" y="100" width="70" height="22" rx="4" fill="#c2554b"/><text x="100" y="115" fill="#fff" font-size="10" font-family="sans-serif" text-anchor="middle" font-weight="700">Quick exit</text><circle cx="150" cy="111" r="9" fill="none" stroke="#f2f3f4" stroke-width="2.5"/></svg>
+      <h2>Leaving fast</h2>
+      <p>The red <b>Quick exit</b> bar sits at the bottom of every screen. One tap clears Lea, with no "are you sure?".</p>
+      <p>You can also disguise Lea as Weather, Notes or Calculator in Safety &amp; privacy.</p>
+    </div>
+    <div class="dots" id="odots"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+    <div class="onbnav"><button class="btn ghost" id="onbBack">Back</button><button class="btn primary" id="onbNext">Next</button></div>
+  </div>
+
+  <!-- Disguise screens -->
+  <div class="disg" id="d-weather">
+    <div class="wcity">OAKLAND</div>
+    <div class="wtemp" data-back>17&deg;</div>
+    <div class="wdesc">Partly cloudy &middot; feels like 16&deg;</div>
+    <div class="wgrid"><div class="wday">FRI<b>18&deg;</b></div><div class="wday">SAT<b>19&deg;</b></div><div class="wday">SUN<b>17&deg;</b></div><div class="wday">MON<b>16&deg;</b></div></div>
+    <div class="hint">Mock only: tap the temperature 3 times to return</div>
+  </div>
+  <div class="disg" id="d-notes">
+    <h1 data-back>Notes</h1>
+    <div class="n">Groceries<small>milk, rice, eggs, onions</small></div>
+    <div class="n">Pick up dry cleaning<small>Thursday</small></div>
+    <div class="n">Book ideas<small>ask Maya for the title</small></div>
+    <div class="hint" style="margin-top:auto">Mock only: tap "Notes" 3 times to return</div>
+  </div>
+  <div class="disg" id="d-calc">
+    <div class="disp" data-back>0</div>
+    <div class="keys"><div>C</div><div>&plusmn;</div><div>%</div><div class="o">&divide;</div><div>7</div><div>8</div><div>9</div><div class="o">&times;</div><div>4</div><div>5</div><div>6</div><div class="o">&minus;</div><div>1</div><div>2</div><div>3</div><div class="o">+</div></div>
+    <div class="hint">Mock only: tap the display 3 times to return</div>
   </div>
   <div id="gone"><div>This tab has been cleared.<br><button id="reset">Reopen the mock</button></div></div>
 </div>
 <script>
-var thread=document.getElementById('thread'),firstrun=document.getElementById('firstrun'),scroll=document.getElementById('scroll'),input=document.getElementById('input');
+var $=function(id){return document.getElementById(id)};
+var thread=$('thread'),firstrun=$('firstrun'),scroll=$('scroll'),input=$('input');
+/* Talk */
 var replies={
 "How does a restraining order actually work?":"There are a few kinds and they do different things. Which one fits depends on where you are, so before I say anything specific:",
-"I want to write down something that happened.":"We can do that now. I'll ask short questions, you answer only what you want to, and I'll keep it as a dated entry with anything you attach sealed so it can't be quietly altered later.<br><br>You can stop at any point and nothing is kept.",
-"My employer fired me after I reported harassment.":"That may be retaliation, which is treated separately from the harassment itself and often has a short deadline to act on. Deadlines here are counted in specific ways, so before I give you a date:"};
+"I want to write down something that happened.":"We can do that now. I'll ask short questions, you answer only what you want to, and I'll keep it as a dated entry in your record, sealed so it can't be quietly altered later.<br><br>You can stop at any point and nothing is kept.",
+"My employer fired me after I reported harassment.":"That may be retaliation, which is treated separately from the harassment itself and often has a short deadline to act on. Deadlines are counted in specific ways, so before I give you a date:"};
 var needsJ={"How does a restraining order actually work?":1,"My employer fired me after I reported harassment.":1};
 function add(cls,html){var d=document.createElement('div');d.className='msg '+cls;d.innerHTML=html;thread.appendChild(d);scroll.scrollTop=scroll.scrollHeight}
 function send(q){if(!q)return;firstrun.style.display='none';add('me',q.replace(/</g,'&lt;'));var body=replies[q]||"Got it. Tell me a little more and I'll take it from there.";setTimeout(function(){add('lea',body);if(needsJ[q]){var a=document.createElement('div');a.className='ask';a.innerHTML="Which state are you in? I need this before I say anything specific, and I won't ask again.<select><option>Choose a state</option><option>California</option><option>New York</option><option>Texas</option><option>Washington</option></select>";thread.appendChild(a);scroll.scrollTop=scroll.scrollHeight}},420)}
 document.querySelectorAll('.chip').forEach(function(c){c.onclick=function(){send(c.dataset.q)}});
-document.getElementById('send').onclick=function(){var v=input.value.trim();input.value='';send(v)};
+$('send').onclick=function(){var v=input.value.trim();input.value='';send(v)};
 input.addEventListener('keydown',function(e){if(e.key==='Enter'){var v=input.value.trim();input.value='';send(v)}});
-document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on')});document.querySelectorAll('.view').forEach(function(x){x.classList.remove('on')});t.classList.add('on');document.getElementById('v-'+t.dataset.v).classList.add('on');scroll.scrollTop=0}});
-document.querySelectorAll('.sw').forEach(function(s){s.onclick=function(){s.classList.toggle('on');if(s.id==='sw1'&&s.classList.contains('on'))go()}});
-function go(){document.getElementById('disguise').classList.add('on')}
-document.getElementById('toDisguise').onclick=function(e){e.preventDefault();go()};
-var taps=0;
-document.getElementById('temp').onclick=function(){if(++taps>=3){taps=0;document.getElementById('disguise').classList.remove('on');document.getElementById('sw1').classList.remove('on')}};
-document.getElementById('back').onclick=function(){document.getElementById('temp').click()};
-document.getElementById('exitBtn').onclick=function(){thread.innerHTML='';firstrun.style.display='block';input.value='';document.getElementById('gone').classList.add('on')};
-document.getElementById('reset').onclick=function(){document.getElementById('gone').classList.remove('on')};
-document.getElementById('exportBtn').onclick=function(){this.textContent='Chronology ready. 3 entries, 6 attachments, PDF.'};
+/* Tabs */
+function showTab(v){document.querySelectorAll('.tab').forEach(function(x){x.classList.toggle('on',x.dataset.v===v)});document.querySelectorAll('.view').forEach(function(x){x.classList.toggle('on',x.id==='v-'+v)});$('composer').style.display=v==='chat'?'flex':'none';scroll.scrollTop=0}
+document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){showTab(t.dataset.v)}});
+/* Toast */
+function toast(t){var el=$('toast');el.textContent=t;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('on')},2200)}
+/* Text size */
+var sizes=['standard','large','larger'];
+function setTs(s){if(s==='standard')document.documentElement.removeAttribute('data-ts');else document.documentElement.setAttribute('data-ts',s);document.querySelectorAll('#tsSeg button').forEach(function(b){b.classList.toggle('on',b.dataset.ts===s)})}
+document.querySelectorAll('#tsSeg button').forEach(function(b){b.onclick=function(){setTs(b.dataset.ts)}});
+$('tsQuick').onclick=function(){var cur=document.documentElement.getAttribute('data-ts')||'standard';var nx=sizes[(sizes.indexOf(cur)+1)%3];setTs(nx);toast('Text size: '+nx)};
+setTs('standard');
+/* Toggles */
+document.querySelectorAll('.sw').forEach(function(s){s.onclick=function(){s.classList.toggle('on')}});
+/* Sheets */
+function openSheet(id){$('scrim').classList.add('on');$(id).classList.add('on')}
+function closeSheets(){$('scrim').classList.remove('on');document.querySelectorAll('.sheet').forEach(function(s){s.classList.remove('on')});$('writeBox').style.display='none'}
+$('scrim').onclick=closeSheets;
+/* Record */
+var count=3;
+function addEntry(title,desc,tags){var c=document.createElement('div');c.className='card';var now=new Date();var d=now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});c.innerHTML='<h4>'+title+'</h4><div class="meta">'+d+' &middot; added just now</div><div>'+desc+'</div><div class="tagrow">'+tags.map(function(t){return '<span class="tag">'+t+'</span>'}).join('')+'</div><div class="hash">sealed on capture &middot; sha256 '+Math.random().toString(16).slice(2,8)+'&hellip;'+Math.random().toString(16).slice(2,8)+'</div>';$('entries').prepend(c);count++;$('recCount').textContent=count+' entries. Only you can see these.';closeSheets();toast('Added to your record and sealed')}
+$('addBtn').onclick=function(){openSheet('addSheet')};
+$('closeAdd').onclick=closeSheets;
+document.querySelectorAll('[data-add]').forEach(function(b){b.onclick=function(){var k=b.dataset.add;if(k==='write'){$('writeBox').style.display='block';$('writeText').focus();return}
+if(k==='photo')addEntry('Screenshot','1 image from your camera roll.',['1 screenshot','original time kept','not shared']);
+if(k==='doc')addEntry('Document','PDF, 1 page.',['1 document','not shared']);
+if(k==='voice')addEntry('Voice memo','0:48 recording.',['1 voice memo','not shared'])}});
+$('saveWrite').onclick=function(){var t=$('writeText').value.trim();addEntry('Written note',t?(t.length>90?t.slice(0,90)+'&hellip;':t.replace(/</g,'&lt;')):'Written in your own words.',['in your words','not shared']);$('writeText').value=''};
+$('exportBtn').onclick=function(){this.textContent='Chronology ready. '+count+' entries, PDF.'};
+/* Learn */
+var li=0,lc=document.querySelectorAll('.lcard'),ld=document.querySelectorAll('#ldots i');
+function lshow(){lc.forEach(function(c,i){c.classList.toggle('on',i===li)});ld.forEach(function(d,i){d.classList.toggle('on',i===li)});$('lnext').textContent=li===lc.length-1?'Done':'Next'}
+$('lnext').onclick=function(){if(li<lc.length-1){li++;lshow()}else{toast('Lesson finished');li=0;lshow()}};
+$('lprev').onclick=function(){if(li>0){li--;lshow()}};
+/* Onboarding */
+var oi=0,os=document.querySelectorAll('.step'),od=document.querySelectorAll('#odots i');
+function oshow(){os.forEach(function(s,i){s.classList.toggle('on',i===oi)});od.forEach(function(d,i){d.classList.toggle('on',i===oi)});$('onbCount').textContent=(oi+1)+' of '+os.length;$('onbNext').textContent=oi===os.length-1?'Start':'Next';$('onbBack').style.visibility=oi===0?'hidden':'visible'}
+$('onbNext').onclick=function(){if(oi<os.length-1){oi++;oshow()}else{$('onb').classList.remove('on')}};
+$('onbBack').onclick=function(){if(oi>0){oi--;oshow()}};
+$('onbSkip').onclick=function(){$('onb').classList.remove('on')};
+$('replay').onclick=function(){oi=0;oshow();$('onb').classList.add('on')};
+oshow();
+/* Disguise */
+var dsel='weather',dmeta={weather:{icon:'&#9925;',bg:'#0b1220',fg:'#e8eef7',name:'Weather',how:'tap the temperature 3 times'},notes:{icon:'&#128221;',bg:'#fbfaf7',fg:'#222',name:'Notes',how:'tap the title "Notes" 3 times'},calc:{icon:'&#128290;',bg:'#000',fg:'#fff',name:'Calculator',how:'tap the number display 3 times'}},disgOn=false;
+function dpaint(){var m=dmeta[dsel];$('newIcon').innerHTML=m.icon;$('newIcon').style.background=m.bg;$('newIcon').style.color=m.fg;$('newName').textContent=m.name;$('disgExplain').innerHTML='On your home screen, look for <b style="display:inline">'+m.name+'</b>. To get back into Lea, '+m.how+'.';document.querySelectorAll('[data-d]').forEach(function(o){o.classList.toggle('sel',o.dataset.d===dsel)})}
+document.querySelectorAll('[data-d]').forEach(function(o){o.onclick=function(){dsel=o.dataset.d;dpaint()}});
+$('disgSetup').onclick=function(){dpaint();openSheet('disgSheet')};
+$('toDisguise').onclick=function(e){e.preventDefault();showTab('set');dpaint();openSheet('disgSheet')};
+$('closeDisg').onclick=closeSheets;
+$('disgOn').onclick=function(){disgOn=true;$('disgDesc').textContent='On. Looks like '+dmeta[dsel].name+'. To come back, '+dmeta[dsel].how+'.';closeSheets();$('d-'+dsel).classList.add('on')};
+$('disgOff').onclick=function(){disgOn=false;$('disgDesc').textContent='Off. Lea can look and be named like an ordinary app.';closeSheets();toast('Disguise is off')};
+document.querySelectorAll('[data-back]').forEach(function(el){var taps=0;el.onclick=function(){if(++taps>=3){taps=0;document.querySelectorAll('.disg').forEach(function(d){d.classList.remove('on')})}}});
+/* Quick exit: one tap, no confirmation. Esc twice on desktop. */
+function quickExit(){thread.innerHTML='';firstrun.style.display='block';input.value='';closeSheets();$('gone').classList.add('on')}
+$('exitBtn').onclick=quickExit;
+var lastEsc=0;document.addEventListener('keydown',function(e){if(e.key==='Escape'){var n=Date.now();if(n-lastEsc<600)quickExit();lastEsc=n}});
+$('reset').onclick=function(){$('gone').classList.remove('on')};
 </script>
 </body>
 </html>
